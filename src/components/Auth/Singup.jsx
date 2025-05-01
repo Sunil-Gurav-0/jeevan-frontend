@@ -8,6 +8,11 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const userData = {
+    name,
+    email,
+    password,
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
