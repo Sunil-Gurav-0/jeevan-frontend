@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -47,7 +47,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/users/send-otp', { email });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/send-otp`, { email });
       if (response.data.message === "OTP sent successfully") {
         setOtpSent(true);
       } else {
@@ -67,7 +67,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/users/reset-password', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/reset-password`, {
         email,
         otp,
         newPassword
