@@ -8,23 +8,27 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const userData = {
-    name,
-    email,
-    password,
-  };
+
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://jeevan-backend-5shs.vercel.app";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://jeevan-backend-5shs.vercel.app/api/users", userData)
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
+    const userData = { name, email, password };
+
+    axios.post(`${BASE_URL}/api/users`, userData)
       .then(result => {
         console.log(result);
-        alert('Registration successful! You can now login.'); // Success alert
+        alert('Registration successful! You can now login.');
         navigate("/login");
       })
       .catch(error => {
-        console.log(error);
-        // Error alert with server message or generic message
+        console.error(error);
         const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
         alert(`Error: ${errorMessage}`);
       });
@@ -34,17 +38,15 @@ const Signup = () => {
     <div className="signup-container">
       <div className="signup-card">
         <h2>Create an Account</h2>
-
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <input
               type="text"
               id="name"
-              name="name"
+              value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your full name"
-              className="form-input"
               required
             />
           </div>
@@ -54,10 +56,9 @@ const Signup = () => {
             <input
               type="email"
               id="email"
-              name="email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="form-input"
               required
             />
           </div>
@@ -67,18 +68,14 @@ const Signup = () => {
             <input
               type="password"
               id="password"
-              autoComplete='off'
-              name="password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password (min 6 characters)"
-              className="form-input"
+              placeholder="Create a password"
               required
             />
           </div>
 
-          <button type="submit" className="submit-button">
-            Sign Up
-          </button>
+          <button type="submit" className="submit-button">Sign Up</button>
         </form>
 
         <div className="login-redirect">
