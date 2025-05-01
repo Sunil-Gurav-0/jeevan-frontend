@@ -11,7 +11,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`${process.env.REACT_APP_API_URL}/api/users`, { name, email, password })
+    axios.post("https://jeevan-backend-5shs.vercel.app/api/users", userData)
       .then(result => {
         console.log(result);
         alert('Registration successful! You can now login.'); // Success alert
